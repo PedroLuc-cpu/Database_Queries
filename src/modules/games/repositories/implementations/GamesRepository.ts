@@ -1,4 +1,4 @@
-import { getRepository, Like, Repository } from 'typeorm';
+import { getRepository, Like, Repository, getManager } from 'typeorm';
 
 import { User } from '../../../users/entities/User';
 import { Game } from '../../entities/Game';
@@ -27,6 +27,32 @@ export class GamesRepository implements IGamesRepository {
     }
 
     // este teste não passou não sei que motivo.
+
+    // tambem não passou
+    // return await this.repository
+    //   .createQueryBuilder("games")
+    //   .where("title ILIKE :param", { param: `%${param}%` })
+    //   .getMany();
+    //_____________________________________________________________________________
+    // nem assim
+
+  //   const entityManager = getManager(); // Obtém o gerenciador de entidades do TypeORM
+
+  //   try {
+  //     const query = `
+  //     SELECT *
+  //     FROM games
+  //     WHERE title LIKE ?;
+  //   `;
+
+  //     const games = await entityManager.query(query, [`%${param}%`]);
+
+  //     return games;
+  //   } catch (error) {
+  //     // Tratar erros aqui, se necessário
+  //     throw error;
+  //   }
+  // }
   }
 
   async countAllGames(): Promise<[{ count: string }]> {
