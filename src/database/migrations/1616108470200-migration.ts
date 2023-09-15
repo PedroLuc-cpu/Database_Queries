@@ -11,6 +11,16 @@ export class migration1616108470200 implements MigrationInterface {
       'CREATE TABLE "games" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_c9b16b62917b5595af982d66337" PRIMARY KEY ("id"))',
     );
     await queryRunner.query(
+      'CREATE TABLE "genres" ("genre_id" uuid NOT NULL DEFAULT uuid_generate_v4(), "genre_name" character varying NOT NULL, CONSTRAINT "PK_c9b16b62917b5595af98235621" PRIMARY KEY ("id"))',
+    );
+    await queryRunner.query(
+      "CREATE TABLE orders (order_id INT PRIMARY KEY,user_id INT NOT NULL, order_date DATE NOT NULL, total_amount DECIMAL(10, 2) NOT NULL); "
+    );
+
+    await queryRunner.query(
+      "CREATE TABLE order_details (order_detail_id INT PRIMARY KEY, order_id INT NOT NULL, game_id INT NOT NULL, quantity INT NOT NULL, price DECIMAL(10, 2) NOT NULL, FOREIGN KEY(order_id) REFERENCES orders(order_id), FOREIGN KEY(game_id) REFERENCES games(game_id));"
+    );
+    await queryRunner.query(
       'CREATE TABLE "users_games_games" ("usersId" uuid NOT NULL, "gamesId" uuid NOT NULL, CONSTRAINT "PK_cd4067d574477fd5c7693bc7872" PRIMARY KEY ("usersId", "gamesId"))',
     );
     await queryRunner.query(
